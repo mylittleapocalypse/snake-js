@@ -5,7 +5,7 @@ var Options = {
 };
 var EMPTY = 0, SNAKE = 1, FRUIT = 2;
 		
-function PlayGrid(){
+function PlayGrid() {
 	this.width = null,
 	this.height = null,
 	this.grid = null;
@@ -28,6 +28,38 @@ function PlayGrid(){
 
 	this.get = (x,y) => {
 		return this.grid[x][y];
+	}
+}
+
+function Snake() {
+	this.direction = null,
+	this.last = null,
+	this.queue = null;
+
+	this.init = (x, y, initialDirection) => {
+		this.direction = initialDirection;
+		this.queue = [];
+		this.insert(x,y);
+
+		switch(this.direction) {
+			case Options.Dir.UP:    this.insert(x  , y+1); 
+				break;
+			case Options.Dir.RIGHT: this.insert(x-1, y); 
+				break;
+			case Options.Dir.DOWN:  this.insert(x  , y-1); 
+				break;
+			case Options.Dir.LEFT:  this.insert(x+1, y); 
+				break;
+		}
+	}
+
+	this.insert = (x, y) => {
+		this.queue.unshift({x:x, y:y});
+		this.last = this.queue[0];
+	}
+
+	this.remove = () => {
+		return this.queue.pop();
 	}
 }
 
